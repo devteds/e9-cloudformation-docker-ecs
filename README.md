@@ -1,6 +1,6 @@
 # Docker on Amazon ECS using AWS CloudFormation & CLI
 
-Devteds [Episode #9](https://devteds.com/episodes/9-docker-on-amazon-ecs-using-aws-cloudformation-and-cli)
+Devteds [Episode #9](https://devteds.com/episodes/9-docker-on-amazon-ecs-using-cloudformation)
 
 Create and run docker container on Amazon ECS using CloudFormation and CLI.
 
@@ -67,6 +67,6 @@ Copy the `BooksApiEndpoint` value from `api` stack output on AWS Management Cons
 
 ## References
 
-Find the resources and references on https://devteds.com/episodes/8-mysql-and-postgresql-with-docker-in-development
+Find the resources and references on https://devteds.com/episodes/9-docker-on-amazon-ecs-using-cloudformation
 
 
