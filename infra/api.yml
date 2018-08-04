@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: container on ecs cluster
+
+Resources:
+  
+  Task:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: apis
+      Cpu: 256
+      Memory: 512
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ExecutionRoleArn: !ImportValue ECSTaskExecutionRole
+      ContainerDefinitions:
+        - Name: booksapi
+          Image: 532497595666.dkr.ecr.us-west-2.amazonaws.com/books-api:v1
+          PortMappings:
+            - ContainerPort: 4567
+              Protocol: tcp
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: 'apis'
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: 'books-api'
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: ListenerRule
+    Properties:
+      TaskDefinition: !Ref Task
+      Cluster: !ImportValue 'ECSCluster'
+      LaunchType: FARGATE
+      DesiredCount: 2
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 70
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - !ImportValue Subnet1
+            - !ImportValue Subnet2
+          SecurityGroups:
+            - !ImportValue ContainerSecurityGroup
+      LoadBalancers:
+        - ContainerName: booksapi
+          ContainerPort: 4567
+          TargetGroupArn: !Ref TargetGroup
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !ImportValue VPC
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: /stat
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 10
+      TargetType: ip
+
+  ListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn: !ImportValue Listener
+      Priority: 2
+      Conditions:
+        - Field: path-pattern
+          Values:
+            - /api/book*
+      Actions:
+        - TargetGroupArn: !Ref TargetGroup
+          Type: forward
+
+
+Outputs:
+
+  ApiEndpoint:
+    Description: Books API Endpoint
+    Value: !Join ['', ['http://', !ImportValue DomainName, '/api/books']]
+    Export:
+      Name: 'BooksApiEndpoint'
+
