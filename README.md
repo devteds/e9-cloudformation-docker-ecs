@@ -84,16 +84,4 @@ There isn't a cleaner way to deploy application changes (container) with CloudFo
 
 Find the resources and references on https://devteds.com/episodes/9-docker-on-amazon-ecs-using-cloudformation
 
-
-
-
-## Using ECS-CLI for orchestration
-
-ecs-cli configure --cluster bookstore --default-launch-type FARGATE --region us-west-2 --config-name bookstore
-
-
-ecs-cli compose -f compose.yml service up --cluster-config bookstore  --container-name booksapi --container-port 4567 --target-group-arn arn:aws:elasticloadbalancing:us-west-2:532497595666:targetgroup/api-TargetG-4I8SUJ0W8MQP/11b49dffb036169d
-
-
-https://spin.atomicobject.com/2017/06/06/ecs-deployment-script/
-
+Blog on automation of docker build and ecs deployment - https://spin.atomicobject.com/2017/06/06/ecs-deployment-script/
