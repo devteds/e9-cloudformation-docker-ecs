@@ -64,9 +64,36 @@ aws cloudformation create-stack --template-body file://$PWD/infra/api.yml --stac
 
 Copy the `BooksApiEndpoint` value from `api` stack output on AWS Management Console. Make a request to that URL on browser or any REST client.
 
+## Need to deploy app changes?
+
+There isn't a cleaner way to deploy application changes (container) with CloudFormation, especially if you prefer the same image tag (eg: latest, green, prod etc). There are a few difference options,
+
+- Use new image tag and pass that as parameter to CF stack (api.yml) to update-stack or deploy. Many don't prefer using new revision number for as tag.
+- With CloudFormation, some prefer create-stack & delete-stack to manage zero-downtime blue-green deployments, not specifically for ECS. ECS does part of this but this is an option
+- Use ECS-CLI if you like Docker Compose structure to define container services. This is interesting but I am not sure this is really useful
+- A little hack to register a new task definition revision and update the service using CLI. Refer the `./deploy_app.sh` script.
+
+```
+# ./deploy_app.sh <CLUSTER NAME> <SERVICE NAME> <TASK FAMILY>
+./deploy_app.sh bookstore books-service apis
+# One executed, ECS Service update will take a few minutes for the new task / container go live
+```
+
 
 ## References
 
 Find the resources and references on https://devteds.com/episodes/9-docker-on-amazon-ecs-using-cloudformation
 
+
+
+
+## Using ECS-CLI for orchestration
+
+ecs-cli configure --cluster bookstore --default-launch-type FARGATE --region us-west-2 --config-name bookstore
+
+
+ecs-cli compose -f compose.yml service up --cluster-config bookstore  --container-name booksapi --container-port 4567 --target-group-arn arn:aws:elasticloadbalancing:us-west-2:532497595666:targetgroup/api-TargetG-4I8SUJ0W8MQP/11b49dffb036169d
+
+
+https://spin.atomicobject.com/2017/06/06/ecs-deployment-script/
 

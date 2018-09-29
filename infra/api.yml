@@ -16,6 +16,8 @@ Resources:
       ContainerDefinitions:
         - Name: booksapi
           Image: 532497595666.dkr.ecr.us-west-2.amazonaws.com/books-api:v1
+          Cpu: 256
+          Memory: 512
           PortMappings:
             - ContainerPort: 4567
               Protocol: tcp
@@ -30,6 +32,7 @@ Resources:
     Type: AWS::ECS::Service
     DependsOn: ListenerRule
     Properties:
+      ServiceName: books-service
       TaskDefinition: !Ref Task
       Cluster: !ImportValue 'ECSCluster'
       LaunchType: FARGATE
@@ -53,6 +56,7 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
+      Name: books-tg
       VpcId: !ImportValue VPC
       Port: 80
       Protocol: HTTP
