@@ -70,7 +70,7 @@ There isn't a cleaner way to deploy application changes (container) with CloudFo
 
 - Use new image tag and pass that as parameter to CF stack (api.yml) to update-stack or deploy. Many don't prefer using new revision number for as tag.
 - With CloudFormation, some prefer create-stack & delete-stack to manage zero-downtime blue-green deployments, not specifically for ECS. ECS does part of this but this is an option
-- Use ECS-CLI if you like Docker Compose structure to define container services. This is interesting but I am not sure this is really useful
+- Use ECS-CLI if you like Docker Compose structure to define container services. This is interesting but I am not sure this is really useful.
 - A little hack to register a new task definition revision and update the service using CLI. Refer the `./deploy_app.sh` script.
 
 ```
@@ -84,4 +84,5 @@ There isn't a cleaner way to deploy application changes (container) with CloudFo
 
 Find the resources and references on https://devteds.com/episodes/9-docker-on-amazon-ecs-using-cloudformation
 
-Blog on automation of docker build and ecs deployment - https://spin.atomicobject.com/2017/06/06/ecs-deployment-script/
+- Blog on automation of docker build and ecs deployment - https://spin.atomicobject.com/2017/06/06/ecs-deployment-script/
+- AWS ECS-CLI https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI.html
