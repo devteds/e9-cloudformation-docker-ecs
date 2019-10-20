@@ -66,7 +66,7 @@ Copy the `BooksApiEndpoint` value from `api` stack output on AWS Management Cons
 
 ## Need to deploy app changes?
 
-There isn't a cleaner way to deploy application changes (container) with CloudFormation, especially if you prefer the same image tag (eg: latest, green, prod etc). There are a few difference options,
+There isn't a cleaner way to deploy application changes (container) with CloudFormation, especially if you prefer the same image tag (eg: latest, green, prod etc). There are a few different options,
 
 - Use new image tag and pass that as parameter to CF stack (api.yml) to update-stack or deploy. Many don't prefer using new revision number for as tag.
 - With CloudFormation, some prefer create-stack & delete-stack to manage zero-downtime blue-green deployments, not specifically for ECS. ECS does part of this but this is an option
