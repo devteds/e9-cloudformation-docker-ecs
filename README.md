@@ -14,7 +14,7 @@ Create and run docker container on Amazon ECS using CloudFormation and CLI.
 
 [Episode video link](https://youtu.be/Gr2yTSsVSqg)
 
-[![Episode Video Link](https://i.ytimg.com/vi/Gr2yTSsVSqg/hqdefault.jpg)](https://youtu.be/Gr2yTSsVSqg)
+[![Episode Video Link](https://i.ytimg.com/vi/Gr2yTSsVSqg/hqdefault.jpg)](https://devteds.com/docker-on-amazon-ecs-using-cloudformation/)
 
 Visit https://devteds.com to watch all the episodes
 
