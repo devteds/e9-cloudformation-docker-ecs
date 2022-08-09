@@ -18,6 +18,12 @@ Create and run docker container on Amazon ECS using CloudFormation and CLI.
 
 Visit https://devteds.com to watch all the episodes
 
+
+
+> ## Announcement: Course on Kubernetes
+> If you're want to start deploying your containers to Kubernetes, especially on AWS EKS, [check this course on Kubernetes](https://courses.devteds.com/kubernetes-get-started) that walkthrough creating Kubernetes cluster on AWS EKS using Terraform and deploying multiple related containers applications to Kubernetes and more. https://courses.devteds.com/kubernetes-get-started 
+
+
 ## Terminal Window Logs
 
 ### Code
